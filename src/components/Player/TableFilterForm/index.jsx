@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import querystring from 'querystring';
 import styled from 'styled-components';
 import heroes from 'dotaconstants/build/heroes.json';
+import items from 'dotaconstants/build/items.json';
 import patch from 'dotaconstants/build/patch.json';
 import region from 'dotaconstants/build/region.json';
 import { toggleShowForm } from '../../../actions/formActions';
@@ -168,6 +169,12 @@ class TableFilterForm extends React.Component {
     const heroList = Object.keys(heroes)
       .map((id) => ({
         text: heroes[id] && heroes[id].localized_name,
+        value: id,
+      }))
+      .sort((a, b) => a.text && a.text.localeCompare(b.text));
+    const itemList = Object.keys(items)
+      .map((id) => ({
+        text: items[id] && items[id].dname,
         value: id,
       }))
       .sort((a, b) => a.text && a.text.localeCompare(b.text));
@@ -487,6 +494,12 @@ class TableFilterForm extends React.Component {
               dataSource={partySize}
               strict
               limit={1}
+            />
+            <CustomFormField
+              name="items"
+              label={strings.filter_items}
+              dataSource={itemList}
+              limit={6}
             />
           </div>
         </div>
